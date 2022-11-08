@@ -5,4 +5,9 @@ Rails.application.routes.draw do
                  registrations: 'users/registrations'
              }
   get '/member-data', to: 'members#show'
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :products, only: [ :index ]
+    end
+  end
 end
