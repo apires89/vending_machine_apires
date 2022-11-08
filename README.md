@@ -1,24 +1,11 @@
-# README
+Challenge #1 MatchMVP
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Vending Machine API:
 
-Things you may want to cover:
+Ruby version 3.1.2
 
-* Ruby version
+Auth method: Devise, JWT for Token
 
-* System dependencies
+Rails 7
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
