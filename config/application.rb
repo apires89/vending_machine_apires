@@ -41,4 +41,3 @@ module VendingMachineApires
   end
 end
 
-curl -XGET -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjY3OTIyMTA0LCJleHAiOjE2Njc5MjU3MDQsImp0aSI6IjhiOWU4OTYzLWFhZjAtNGMzZS1hNTc3LTA4MTYwZGU5MDUxZiJ9.dUGL1OjVylaqsv7LCnEJs8vZR465oEG0095PBhJ8pug" -H "Content-Type: application/json" http://localhost:3000/member-data
