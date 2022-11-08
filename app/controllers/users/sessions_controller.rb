@@ -8,6 +8,11 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
+    jwt_payload = JWT.decode(request.headers['Authorization'].split(' ')[1],
+    Rails.application.credentials.fetch(:devise)[:jwt_secret_key]).first
+    p jwt_payload
+    p jwt_payload['sub']
+    current_user = User.find(jwt_payload['sub'])
     log_out_success && return if current_user
 
     log_out_failure

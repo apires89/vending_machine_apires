@@ -33,7 +33,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       # t.datetime :locked_at
 
       t.monetize :deposit
-      t.string :role
+      t.string :role, default: "buyer"
 
       t.timestamps null: false
     end

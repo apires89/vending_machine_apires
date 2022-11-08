@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/member-data', to: 'members#show'
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :products, only: [ :index ]
+      resources :products, only: [ :index, :show, :update, :create, :destroy ]
     end
   end
 end
