@@ -1,14 +1,20 @@
 class Api::V1::UsersController < Api::V1::BaseController
   def deposit
-    if valid_deposit_amount
-      if current_user.role == "buyer" && current_user.update(deposit: current_user.deposit + convert_to_cents)
+    valid_deposit_amount ? check_and_update : render_something_went_wrong
+  end
+
+  private
+
+  def check_and_update
+    if current_user.role == "buyer" && current_user.update(deposit: current_user.deposit + convert_to_cents)
         render json: current_user, status: :ok
-      else
+    else
         render json: { message: "Not a customer, or something went wrong.", data: current_user.errors.full_messages, status: "failed" }, status: :unprocessable_entity
-      end
-   else
-      render json: { message: "Wrong input, only accepts 5, 10 ,20 ,50 or 100 cents", data: current_user.errors.full_messages, status: "failed input" }, status: :unprocessable_entity
-   end
+    end
+  end
+
+  def render_something_went_wrong
+    render json: { message: "Wrong input, only accepts 5, 10 ,20 ,50 or 100 cents", data: current_user.errors.full_messages, status: "failed input" }, status: :unprocessable_entity
   end
 
 
