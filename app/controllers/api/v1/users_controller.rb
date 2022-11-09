@@ -12,6 +12,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def start_selling
+    current_user.change_user_to_seller
+  end
+
   private
 
   def check_and_update_deposit

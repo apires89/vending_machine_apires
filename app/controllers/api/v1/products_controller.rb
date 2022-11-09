@@ -2,6 +2,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
   before_action :set_product, only: [ :show, :update, :destroy ]
   def index
     @products = Product.all
+    render json: @products, status: :ok
   end
 
   def show
@@ -17,7 +18,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
   end
 
   def update
-    if @product.update(product_params)
+    if @product.seller == current_user && @product.update(product_params)
       render json: @product, status: :ok
     else
       render json: { data: @product.errors.full_messages, status: "failed" }, status: :unprocessable_entity
@@ -25,7 +26,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
   end
 
   def destroy
-    if @product.destroy
+    if @product.seller == current_user && @product.destroy
       render json: { data: 'product deleted successfully', status: 'sucess' }, status: :ok
     else
       render json: { data: 'Something went wrong', status: 'failed' }
@@ -53,7 +54,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
   end
 
   def set_product
-    @product = current_user.products.find(params[:id])
+    @product = Product.find(params[:id])
     rescue ActiveRecord::RecordNotFound => error
       render json: error.message, status: :unauthorized
   end

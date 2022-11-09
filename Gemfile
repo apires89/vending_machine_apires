@@ -38,6 +38,10 @@ gem 'devise-jwt'
 gem 'rack-cors'
 #gem 'pundit'
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
