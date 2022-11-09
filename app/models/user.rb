@@ -9,9 +9,15 @@ class User < ApplicationRecord
   monetize :deposit_cents
   validates :role, inclusion: { in: %w(seller buyer),
     message: "%{value} is not a valid role" }
+  after_update :check_valid_deposit
 
   def jwt_payload
     super
+  end
+
+
+  def check_valid_deposit
+    self.deposit.to_s.last(2) == "05" || self.deposit.to_s.last(2) == "00"
   end
 end
 
