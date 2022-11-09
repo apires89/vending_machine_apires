@@ -1,11 +1,20 @@
 class Api::V1::UsersController < Api::V1::BaseController
   def deposit
-    valid_deposit_amount ? check_and_update : render_something_went_wrong
+    valid_deposit_amount ? check_and_update_deposit : render_something_went_wrong
+  end
+
+  def reset
+    # reset deposit back to zero
+    if current_user.role == "buyer" && current_user.update(deposit: 0)
+        render json: current_user, status: :ok
+    else
+        render json: { message: "Not a customer, or something went wrong.", data: current_user.errors.full_messages, status: "failed" }, status: :unprocessable_entity
+    end
   end
 
   private
 
-  def check_and_update
+  def check_and_update_deposit
     if current_user.role == "buyer" && current_user.update(deposit: current_user.deposit + convert_to_cents)
         render json: current_user, status: :ok
     else
