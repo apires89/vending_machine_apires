@@ -1,7 +1,7 @@
 class Api::V1::ProductsController < Api::V1::BaseController
   before_action :set_product, only: [ :show, :update, :destroy ]
   def index
-    @products = policy_scope(Product)
+    @products = current_user.products
   end
 
   def show

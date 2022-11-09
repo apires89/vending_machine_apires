@@ -5,7 +5,7 @@ class User < ApplicationRecord
    devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
-  has_many :products
+  has_many :products, foreign_key: 'seller_id'
   monetize :deposit_cents
   validates :role, inclusion: { in: %w(seller buyer),
     message: "%{value} is not a valid role" }
