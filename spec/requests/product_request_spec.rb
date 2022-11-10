@@ -31,7 +31,7 @@ RSpec.describe "Products", type: :request do
       debugger
 
       if product.cost > current.deposit
-         expect(json[1]]).to eq("Not enough money to buy Mars")
+         expect(json[1]).to eq("Not enough money to buy Mars")
       else
         debugger
 
@@ -43,6 +43,7 @@ RSpec.describe "Products", type: :request do
       expect(json["seller_id"]).to eq(user.id)
       # we can also check the http status of the response
       expect(response.status).to eq(200)
+      end
     end
   end
 
