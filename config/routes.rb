@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       end
       end
       resources :users, only: [] do
-        member do
+        collection do
           patch :start_selling
           patch :deposit
           patch :reset

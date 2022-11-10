@@ -19,5 +19,9 @@ class User < ApplicationRecord
   def check_valid_deposit
     self.deposit.to_s.last(2) == "05" || self.deposit.to_s.last(2) == "00"
   end
+
+  def change_user_to_seller
+    self.update(role: "seller")
+  end
 end
 

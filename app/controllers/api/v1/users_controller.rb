@@ -14,6 +14,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def start_selling
     current_user.change_user_to_seller
+    render json: current_user, status: :ok
   end
 
   private

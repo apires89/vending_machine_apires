@@ -8,9 +8,4 @@ class Product < ApplicationRecord
   def check_if_user_is_seller
     errors.add(:purchase, "user is a buyer, not a seller") if self.seller.role == "buyer"
   end
-
-
-  def change_user_to_seller
-    self.seller.update(role: "seller")
-  end
 end

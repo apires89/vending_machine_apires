@@ -37,7 +37,12 @@ class Api::V1::ProductsController < Api::V1::BaseController
     #accepts productId and amount
     check_input_for_purchase
     #user with buyuer role can buy a product
-    check_role_and_deposit
+    if current_user.role == "buyer"
+      @deposit = current_user.deposit
+    else
+      render json: { message: "Not a customer, or something went wrong.", status: "failed" }, status: :unprocessable_entity
+      return
+    end
     #with deposited money
     if @product.cost > @deposit
       render json: { message: "Not enough money to buy #{@product.productName}", status: "failed" }, status: :unprocessable_entity
@@ -64,13 +69,6 @@ class Api::V1::ProductsController < Api::V1::BaseController
     @product = Product.find(params[:id])
   end
 
-  def check_role_and_deposit
-    if current_user.role == "buyer"
-      @deposit = current_user.deposit
-    else
-      render json: { message: "Not a customer, or something went wrong.", status: "failed" }, status: :unprocessable_entity
-    end
-  end
 
   def calculate_output
     #remove one product from DB
