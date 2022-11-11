@@ -1,5 +1,6 @@
 class Api::V1::ProductsController < Api::V1::BaseController
   before_action :set_product, only: [ :show, :update, :destroy ]
+  before_action :check_login, except: [:index,:show]
   def index
     @products = Product.all
     render json: @products, status: :ok
@@ -91,5 +92,12 @@ class Api::V1::ProductsController < Api::V1::BaseController
       productName: @product.productName,
       change: change
     }, status: "success" }, status: :ok
+  end
+
+  def check_login
+    unless user_signed_in?
+      render json: { message: "Not logged in", status: "failed" }, status: :unprocessable_entity
+      return
+    end
   end
 end
