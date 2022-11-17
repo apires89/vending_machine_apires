@@ -1,6 +1,8 @@
 class Api::V1::ProductsController < Api::V1::BaseController
+  before_action :authenticate_user!, except: [:index,:show]
   before_action :set_product, only: [ :show, :update, :destroy ]
   before_action :check_login, except: [:index,:show]
+
   def index
     @products = Product.all
     render json: @products, status: :ok

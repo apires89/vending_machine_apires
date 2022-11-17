@@ -26,5 +26,5 @@
 !/tmp/storage/.keep
 
 # Ignore master key for decrypting credentials and more.
-.env
+/.env
 /config/master.key
