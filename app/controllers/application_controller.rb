@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::API
   attr_accessor :current_user
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+
 
     rescue_from ActiveRecord::RecordNotFound, with: :rescue_from_not_found
    def authenticate_user!
@@ -23,5 +26,11 @@ class ApplicationController < ActionController::API
     end
     def response_401
       head(:unauthorized)
+    end
+    protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[role])
+      devise_parameter_sanitizer.permit(:account_update, keys: %i[role])
     end
 end

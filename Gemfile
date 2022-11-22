@@ -15,6 +15,8 @@ gem "puma", "~> 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 gem "byebug"
+gem 'jsonapi-serializer'
+
 
 # 'dotenv-rails' is for storing secret key in ENV file
 gem 'dotenv-rails', groups: [:development, :test]

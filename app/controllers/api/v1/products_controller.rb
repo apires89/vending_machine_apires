@@ -9,6 +9,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
   end
 
   def show
+    render json: @product, status: :ok
   end
 
   def create
@@ -38,12 +39,8 @@ class Api::V1::ProductsController < Api::V1::BaseController
 
   def buy
     unless user_signed_in?
-      if params[:user][:id].present?
-        current_user = User.find(params[:user][:id])
-      else
         render json: { message: "Not logged in", status: "failed" }, status: :unprocessable_entity
         return
-      end
     end
     #accepts productId and amount
     check_input_for_purchase
@@ -62,6 +59,8 @@ class Api::V1::ProductsController < Api::V1::BaseController
       calculate_output
     end
   end
+
+
 
   private
 
