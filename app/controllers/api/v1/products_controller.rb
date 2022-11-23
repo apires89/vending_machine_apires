@@ -87,13 +87,34 @@ class Api::V1::ProductsController < Api::V1::BaseController
     spent = @product.cost
     current_user.update(deposit: @deposit - @product.cost)
     change = @deposit - @product.cost
+    valid_change = calculate_change(change)
+
+
     #json with info
     render json: { message: "Purchase Completed!",data: {
       spent: spent,
       productName: @product.productName,
-      change: change
+      change: valid_change
     }, status: "success" }, status: :ok
   end
+
+  def calculate_change(change)
+    valid_change = [[10,0],[20,0],[50,0],[100,0]].reverse
+    change_value = Money.new(0)
+      if change.to_s.chars.last == "5"
+        valid_change.append = [5,1]
+        change_value = Money.new(5)
+      end
+      valid_change.map do |number|
+        if change_value < change && change > Money.new(number[0])
+          change_value = change - Money.new(number[0])
+          number[1] += 1
+        end
+      end
+    valid_change.append = [5,0] if valid_change.last[0] == 10
+    valid_change
+  end
+
 
   def check_login
     unless user_signed_in?
